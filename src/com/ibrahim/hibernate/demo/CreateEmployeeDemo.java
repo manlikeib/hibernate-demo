@@ -11,9 +11,9 @@ public class CreateEmployeeDemo {
 
         SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Employee.class)
                 .buildSessionFactory();
-        Session session = factory.getCurrentSession();
 
-        try {
+        try (factory) {
+            Session session = factory.getCurrentSession();
             // create object to hold data
             Employee tempEmployee = new Employee("Toye", "Jimoh", "Apple");
 
@@ -26,8 +26,6 @@ public class CreateEmployeeDemo {
             //commit transaction
             session.getTransaction().commit();
 
-        } finally {
-            factory.close();
         }
 
     }
